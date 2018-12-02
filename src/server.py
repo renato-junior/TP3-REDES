@@ -13,6 +13,11 @@ class Server:
     def load_data_from_json(self, filename):
         file_content = open(filename).read()
         return json.loads(file_content)
+    
+    def get_all_ixp(self):
+        data = {}
+        data["data"] = self.ix_data["data"]
+        return json.dumps(data)
 
 
 app = Flask(__name__)
@@ -23,7 +28,12 @@ server = Server(
     netixlanfile_name=str(sys.argv[4]))
 
 @app.route("/")
-def hello():
+def test():
     return str(server.net_data)
+
+@app.route("/api/ix")
+def request1():
+    return str(server.get_all_ixp())
+
 
 app.run(host='127.0.0.1', port=int(sys.argv[1]))
