@@ -18,6 +18,15 @@ class Server:
         data = {}
         data["data"] = self.ix_data["data"]
         return json.dumps(data)
+    
+    def get_net_id_ixp(self, ix_id):
+        data = {}
+        ids = []
+        for obj in self.netixlan_data["data"]:
+            if obj["ix_id"] == ix_id:
+                ids.append(obj["net_id"])
+        data["data"] = list(set(ids))
+        return json.dumps(data)
 
 
 app = Flask(__name__)
@@ -32,8 +41,13 @@ def test():
     return str(server.net_data)
 
 @app.route("/api/ix")
-def request1():
+def request_1():
     return str(server.get_all_ixp())
+
+@app.route("/api/ixnets/<int:ix_id>")
+def request_2(ix_id):
+    return str(server.get_net_id_ixp(ix_id))
+
 
 
 app.run(host='127.0.0.1', port=int(sys.argv[1]))
