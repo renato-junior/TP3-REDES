@@ -3,8 +3,10 @@ import json
 import socket
 
 CRLF = "\r\n\r\n"
-server = "127.0.0.1"
-port = 8080
+
+server = sys.argv[1].split(":")[0]
+port = int(sys.argv[1].split(":")[1])
+opt = int(sys.argv[2])
 
 
 def get_request(server, port, path):
@@ -56,4 +58,7 @@ def analysis_1():
         nets_count = len(nets["data"])
         print("{}\t{}\t{}".format(ix["id"], ix["name"], nets_count))
 
-analysis_1()
+if opt == 0:
+    analysis_0()
+elif opt == 1:
+    analysis_1()
