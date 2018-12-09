@@ -36,7 +36,7 @@ class Server:
                 net_name = obj["name"]
                 break
         data["data"] = net_name
-        return net_name
+        return json.dumps(data)
 
 
 
