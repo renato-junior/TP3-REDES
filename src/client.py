@@ -49,4 +49,11 @@ def analysis_0():
         net_name = get_network_name(net)["data"]
         print("{}\t{}\t{}".format(net, net_name, net_quantities[net]))
 
-analysis_0()
+def analysis_1():
+    ixs = get_all_ix()
+    for ix in ixs["data"]:
+        nets = get_ix_networks(ix["id"])
+        nets_count = len(nets["data"])
+        print("{}\t{}\t{}".format(ix["id"], ix["name"], nets_count))
+
+analysis_1()
