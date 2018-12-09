@@ -27,6 +27,17 @@ class Server:
                 ids.append(obj["net_id"])
         data["data"] = list(set(ids))
         return json.dumps(data)
+    
+    def get_net_name(self, net_id):
+        data = {}
+        net_name = ""
+        for obj in self.net_data["data"]:
+            if obj["id"] == net_id:
+                net_name = obj["name"]
+                break
+        data["data"] = net_name
+        return net_name
+
 
 
 app = Flask(__name__)
@@ -38,7 +49,7 @@ server = Server(
 
 @app.route("/")
 def test():
-    return str(server.net_data)
+    return "It works!"
 
 @app.route("/api/ix")
 def request_1():
@@ -48,6 +59,8 @@ def request_1():
 def request_2(ix_id):
     return str(server.get_net_id_ixp(ix_id))
 
-
+@app.route("/api/netname/<int:net_id>")
+def request_3(net_id):
+    return str(server.get_net_name(net_id))
 
 app.run(host='127.0.0.1', port=int(sys.argv[1]))
